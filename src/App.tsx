@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useKeyboardEdge } from "./useKeyboardEdge";
 
-function App() {
+const App: React.FC = () => {
+  const { keyboardEdgeBottom } = useKeyboardEdge();
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>
+          Using Safari to open this page, click this text field, the toolbar
+          will be show above the keyboard edge
+        </h1>
+        <input type="text" style={{ width: "100%" }} placeholder="TEXT FIELD" />
+        <div style={{ height: 1000 }} />
+        <div className="toolbar" style={{ bottom: keyboardEdgeBottom }}>
+          Toolbar
+        </div>
       </header>
     </div>
   );
-}
+};
 
 export default App;
