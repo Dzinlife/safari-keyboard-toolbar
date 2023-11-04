@@ -1,7 +1,7 @@
 {
-  "name": "use-keyboard-edge",
+  "name": "input-prevent-scroll",
   "version": "1.0.0",
-  "main": "src/useKeybaordEdge.ts",
+  "main": "src/inputX.tsx",
   "dependencies": {
     "@types/node": "^16.18.60",
     "@types/react": "^18.2.34",
