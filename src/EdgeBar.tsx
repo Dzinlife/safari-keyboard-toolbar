@@ -57,7 +57,6 @@ const EdgeBar: React.FC<{
     const trailing = debounce(
       () => {
         setShow(true);
-        console.log(calcOffsetTop());
 
         setOffsetTop(calcOffsetTop());
       },
@@ -82,25 +81,6 @@ const EdgeBar: React.FC<{
 
   const childrenRef = useRef<{ focus: () => void }>(null);
 
-  const barTapRef = useRef(false);
-
-  const handleTapBar = <
-    T extends
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.TouchEvent<HTMLDivElement>
-  >(
-    e: T
-  ) => {
-    barTapRef.current = true;
-
-    setTimeout(() => {
-      childrenRef.current?.focus?.();
-      //   setTimeout(() => {
-      //     childrenRef.current?.focus();
-      //   });
-    });
-  };
-
   const children = useMemo(
     () =>
       React.Children.map(props.children, (child) =>
@@ -114,16 +94,8 @@ const EdgeBar: React.FC<{
   return (
     <span
       onBlur={(e) => {
-        setTimeout(() => {
-          if (barTapRef.current) {
-            setTimeout(() => {
-              barTapRef.current = false;
-            });
-            return;
-          }
-          setShow(false);
-          setFocus(false);
-        });
+        setShow(false);
+        setFocus(false);
       }}
       onFocus={() => {
         setFocus(true);
@@ -139,10 +111,11 @@ const EdgeBar: React.FC<{
           <div
             className={props.className}
             ref={barRef}
-            onMouseDownCapture={handleTapBar}
-            onTouchStartCapture={handleTapBar}
-            onBlur={(e) => {
-              e.stopPropagation();
+            onTouchEnd={(e) => {
+              e.preventDefault();
+            }}
+            onMouseDown={(e) => {
+              e.preventDefault();
             }}
             style={{
               transition: "opacity ease 0.16s",

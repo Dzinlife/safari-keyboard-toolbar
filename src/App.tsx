@@ -1,8 +1,19 @@
-import React from "react";
-import InputX from "./InputX";
+import React, { useMemo, useState } from "react";
 import EdgeBar from "./EdgeBar";
+import { throttle } from "lodash";
 
 const App: React.FC = () => {
+  const [toast, setToast] = useState("");
+
+  const showToast = useMemo(() => {
+    return throttle(() => {
+      setToast("Button clicked, and prevent input blur from closing keyboard");
+      setTimeout(() => {
+        setToast("");
+      }, 2000);
+    }, 2000);
+  }, []);
+
   return (
     <div className="App" id="app">
       <header className="App-header"></header>
@@ -19,13 +30,43 @@ const App: React.FC = () => {
         }}
         toolbar={
           <div>
-            <button>button</button>
+            <button
+              onTouchEndCapture={(e) => {
+                e.preventDefault();
+                showToast();
+              }}
+              onClick={(e) => {
+                showToast();
+              }}
+            >
+              button
+            </button>
           </div>
         }
       >
         <input />
       </EdgeBar>
-      <div style={{ height: 1000 }} />
+      <div
+        style={{
+          opacity: toast ? 1 : 0,
+          transition: "ease 0.3s",
+          padding: 10,
+          position: "fixed",
+          margin: "auto",
+          inset: 0,
+          width: 300,
+          height: 44,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          background: "rgba(0,0,0, 0.7)",
+          backdropFilter: "blur(20px)",
+          borderRadius: 10,
+        }}
+      >
+        {toast}
+      </div>
     </div>
   );
 };
