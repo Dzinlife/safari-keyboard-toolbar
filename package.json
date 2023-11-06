@@ -1,11 +1,12 @@
 {
-  "name": "input-prevent-scroll",
+  "name": "safari-keybaord-toolbar",
   "version": "1.0.0",
-  "main": "src/inputX.tsx",
+  "main": "src/EdgeBar.tsx",
   "dependencies": {
     "@types/node": "^16.18.60",
     "@types/react": "^18.2.34",
     "@types/react-dom": "^18.2.14",
+    "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -33,5 +34,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.10"
   }
 }

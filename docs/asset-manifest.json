@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/use-keyboard-edge/static/css/main.0fec5051.css",
-    "main.js": "/use-keyboard-edge/static/js/main.b6be3fac.js",
+    "main.css": "/use-keyboard-edge/static/css/main.d4100969.css",
+    "main.js": "/use-keyboard-edge/static/js/main.6bc59774.js",
     "index.html": "/use-keyboard-edge/index.html",
-    "main.0fec5051.css.map": "/use-keyboard-edge/static/css/main.0fec5051.css.map",
-    "main.b6be3fac.js.map": "/use-keyboard-edge/static/js/main.b6be3fac.js.map"
+    "main.d4100969.css.map": "/use-keyboard-edge/static/css/main.d4100969.css.map",
+    "main.6bc59774.js.map": "/use-keyboard-edge/static/js/main.6bc59774.js.map"
   },
   "entrypoints": [
-    "static/css/main.0fec5051.css",
-    "static/js/main.b6be3fac.js"
+    "static/css/main.d4100969.css",
+    "static/js/main.6bc59774.js"
   ]
 }

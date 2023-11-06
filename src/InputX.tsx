@@ -16,11 +16,11 @@ const InputX = React.forwardRef<
     value?: string | number;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
     onBlur?: React.FocusEventHandler<HTMLInputElement>;
+    onFocus?: React.FocusEventHandler<HTMLInputElement>;
   }
 >((props, ref) => {
-  const [renderStatus, setRenderStauts] = useState<0 | 1>(0);
-
   const inputRef = useRef<HTMLInputElement>(null);
+  const inputCloneRef = useRef<HTMLInputElement | null>(null);
 
   const [value, setValue] = useState(String(props.value || ""));
 
@@ -34,13 +34,15 @@ const InputX = React.forwardRef<
   };
 
   const focus = () => {
-    setRenderStauts(1);
+    (inputCloneRef.current ?? inputRef.current)?.focus();
   };
 
   const getValue = () => inputRef.current?.value ?? value;
 
   const isFocused = () => {
-    return renderStatus !== 0;
+    return (
+      (inputCloneRef.current ?? inputRef.current) === document.activeElement
+    );
   };
 
   useImperativeHandle(
@@ -66,10 +68,14 @@ const InputX = React.forwardRef<
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const _onFocus: React.FormEventHandler = async () => {
+  const _onFocus: React.FocusEventHandler<HTMLInputElement> = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     const original = inputRef.current!;
 
-    const clone = original.cloneNode() as HTMLInputElement;
+    const clone = (inputCloneRef.current =
+      original.cloneNode() as HTMLInputElement);
 
     await new Promise((resolve) => setTimeout(resolve));
     clone.selectionStart = original.selectionStart;
@@ -81,6 +87,8 @@ const InputX = React.forwardRef<
     wrapperRef.current!.appendChild(clone);
 
     clone.focus();
+
+    props.onFocus?.(e);
 
     setTimeout(() => {
       clone.style.opacity = "";
@@ -97,7 +105,9 @@ const InputX = React.forwardRef<
       original.disabled = false;
       original.style.opacity = "";
       clone.style.opacity = "0";
+
       setTimeout(() => {
+        inputCloneRef.current = null;
         clone.remove();
       });
     });
@@ -112,6 +122,10 @@ const InputX = React.forwardRef<
       <input
         value={value}
         onFocus={_onFocus}
+        onBlur={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+        }}
         ref={inputRef}
         onChange={_onChange}
         style={{
