@@ -1,5 +1,5 @@
 {
-  "name": "safari-keybaord-toolbar",
+  "name": "safari-keyboard-toolbar",
   "version": "1.0.0",
   "main": "src/EdgeBar.tsx",
   "dependencies": {
