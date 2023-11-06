@@ -94,9 +94,10 @@ const EdgeBar: React.FC<{
     barTapRef.current = true;
 
     setTimeout(() => {
-      setTimeout(() => {
-        childrenRef.current?.focus();
-      });
+      childrenRef.current?.focus?.();
+      //   setTimeout(() => {
+      //     childrenRef.current?.focus();
+      //   });
     });
   };
 
