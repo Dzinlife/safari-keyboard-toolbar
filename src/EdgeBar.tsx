@@ -101,6 +101,7 @@ const EdgeBar: React.FC<{
       onFocus={() => {
         setFocus(true);
         setTimeout(() => {
+          setOffsetTop(calcOffsetTop());
           setShow(true);
         }, 500);
       }}
