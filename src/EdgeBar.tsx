@@ -43,31 +43,40 @@ const EdgeBar: React.FC<{
   useEffect(() => {
     if (!isFocused) return;
 
-    let isDragging = false;
+    let isTouching = false;
 
     const startHandler = () => {
-      setShow(false);
-
-      isDragging = true;
+      isTouching = true;
       document.documentElement.addEventListener("touchend", endHandler);
     };
 
     const endHandler = () => {
-      isDragging = false;
+      isTouching = false;
       trailing();
       document.documentElement.removeEventListener("touchend", endHandler);
     };
 
     document.documentElement.addEventListener("touchstart", startHandler);
 
+    const leading = debounce(
+      () => {
+        setShow(false);
+      },
+      100,
+      {
+        leading: true,
+        trailing: false,
+      }
+    );
+
     const trailing = debounce(
       () => {
-        if (isDragging) return;
+        if (isTouching) return;
         setShow(true);
 
         setOffsetTop(calcOffsetTop());
       },
-      100,
+      120,
       {
         leading: false,
         trailing: true,
@@ -75,6 +84,7 @@ const EdgeBar: React.FC<{
     );
 
     const handler = () => {
+      leading();
       trailing();
     };
 
