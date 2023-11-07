@@ -19,7 +19,7 @@ const EdgeBar: React.FC<{
     const fix = window.visualViewport.pageTop - window.visualViewport.offsetTop;
 
     return Math.min(
-      window.visualViewport.height - height + window.scrollY - fix,
+      window.visualViewport.height - height + Math.max(window.scrollY, 0) - fix,
       window.outerHeight - height
     );
   };
@@ -43,24 +43,31 @@ const EdgeBar: React.FC<{
   useEffect(() => {
     if (!isFocused) return;
 
-    const leading = debounce(
-      () => {
-        setShow(false);
-      },
-      140,
-      {
-        leading: true,
-        trailing: false,
-      }
-    );
+    let isDragging = false;
+
+    const startHandler = () => {
+      setShow(false);
+
+      isDragging = true;
+      document.documentElement.addEventListener("touchend", endHandler);
+    };
+
+    const endHandler = () => {
+      isDragging = false;
+      trailing();
+      document.documentElement.removeEventListener("touchend", endHandler);
+    };
+
+    document.documentElement.addEventListener("touchstart", startHandler);
 
     const trailing = debounce(
       () => {
+        if (isDragging) return;
         setShow(true);
 
         setOffsetTop(calcOffsetTop());
       },
-      140,
+      100,
       {
         leading: false,
         trailing: true,
@@ -68,7 +75,6 @@ const EdgeBar: React.FC<{
     );
 
     const handler = () => {
-      leading();
       trailing();
     };
 
@@ -76,6 +82,8 @@ const EdgeBar: React.FC<{
 
     return () => {
       window.removeEventListener("scroll", handler);
+      document.documentElement.removeEventListener("touchend", endHandler);
+      document.documentElement.removeEventListener("touchstart", startHandler);
     };
   }, [isFocused]);
 
