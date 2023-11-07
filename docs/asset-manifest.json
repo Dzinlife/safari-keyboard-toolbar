@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/safari-keyboard-toolbar/static/css/main.d4100969.css",
-    "main.js": "/safari-keyboard-toolbar/static/js/main.c7fa5802.js",
+    "main.js": "/safari-keyboard-toolbar/static/js/main.43cb8679.js",
     "index.html": "/safari-keyboard-toolbar/index.html",
     "main.d4100969.css.map": "/safari-keyboard-toolbar/static/css/main.d4100969.css.map",
-    "main.c7fa5802.js.map": "/safari-keyboard-toolbar/static/js/main.c7fa5802.js.map"
+    "main.43cb8679.js.map": "/safari-keyboard-toolbar/static/js/main.43cb8679.js.map"
   },
   "entrypoints": [
     "static/css/main.d4100969.css",
-    "static/js/main.c7fa5802.js"
+    "static/js/main.43cb8679.js"
   ]
 }
