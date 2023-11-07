@@ -58,22 +58,13 @@ const EdgeBar: React.FC<{
 
     document.documentElement.addEventListener("touchstart", startHandler);
 
-    const leading = debounce(
-      () => {
-        setShow(false);
-      },
-      100,
-      {
-        leading: true,
-        trailing: false,
-      }
-    );
+    let isScrolling = false;
 
     const trailing = debounce(
       () => {
         if (isTouching) return;
         setShow(true);
-
+        isScrolling = false;
         setOffsetTop(calcOffsetTop());
       },
       120,
@@ -84,7 +75,11 @@ const EdgeBar: React.FC<{
     );
 
     const handler = () => {
-      leading();
+      if (!isScrolling) {
+        isScrolling = true;
+        setShow(false);
+      }
+
       trailing();
     };
 
