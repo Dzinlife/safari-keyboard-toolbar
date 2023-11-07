@@ -89,8 +89,7 @@ const EdgeBar: React.FC<{
         setFocus(true);
         setTimeout(() => {
           setShow(true);
-          setOffsetTop(calcOffsetTop());
-        }, 700);
+        }, 500);
       }}
     >
       {props.children}
