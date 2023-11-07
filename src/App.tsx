@@ -44,7 +44,7 @@ const App: React.FC = () => {
           </div>
         }
       >
-        <input />
+        <input style={{ height: 44 }} />
       </EdgeBar>
       <div
         style={{
