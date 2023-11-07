@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { debounce } from "lodash-es";
 
@@ -79,18 +79,6 @@ const EdgeBar: React.FC<{
     };
   }, [isFocused]);
 
-  const childrenRef = useRef<{ focus: () => void }>(null);
-
-  const children = useMemo(
-    () =>
-      React.Children.map(props.children, (child) =>
-        React.cloneElement(child, {
-          ref: childrenRef,
-        })
-      ),
-    [props.children]
-  );
-
   return (
     <span
       onBlur={(e) => {
@@ -105,7 +93,7 @@ const EdgeBar: React.FC<{
         }, 700);
       }}
     >
-      {children}
+      {props.children}
       {isFocused &&
         ReactDOM.createPortal(
           <div
